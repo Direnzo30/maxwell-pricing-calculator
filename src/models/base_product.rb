@@ -1,5 +1,4 @@
 class BaseProduct
-  attr_accessor :name, :price, :purchased_quantity, :promotion_price, :promotion_units
 
   def initialize(name:, price:, promotion_price: 0, promotion_units: 0)
     @name = name
@@ -9,8 +8,28 @@ class BaseProduct
     @purchased_quantity = 0
   end
 
+  def item_summary
+    ["#{pretty_name} #{pretty_quantity} #{pretty_price}", final_amount, discount]
+  end
+
   def add_item
     @purchased_quantity += 1
+  end
+
+  private
+
+  attr_accessor :name, :price, :purchased_quantity, :promotion_price, :promotion_units
+
+  def pretty_name
+    name.ljust(15,' ')
+  end
+
+  def pretty_quantity
+    purchased_quantity.to_s.ljust(10,' ')
+  end
+
+  def pretty_price
+    "$#{purchased_quantity.round(2)}".ljust(12,' ')
   end
 
   def final_amount
