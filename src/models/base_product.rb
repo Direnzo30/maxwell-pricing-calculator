@@ -1,4 +1,7 @@
+require_relative '../modules/printable'
+
 class BaseProduct
+  include Printable
 
   def initialize(name:, price:, promotion_price: 0, promotion_units: 0)
     @name = name
@@ -21,15 +24,15 @@ class BaseProduct
   attr_accessor :name, :price, :purchased_quantity, :promotion_price, :promotion_units
 
   def pretty_name
-    name.ljust(15,' ')
+    name.ljust(NAME_SPACING,' ')
   end
 
   def pretty_quantity
-    purchased_quantity.to_s.ljust(10,' ')
+    purchased_quantity.to_s.ljust(QUANTITY_SPACING,' ')
   end
 
   def pretty_price
-    "$#{purchased_quantity.round(2)}".ljust(12,' ')
+    "$#{price}".ljust(PRICE_SPACING,' ')
   end
 
   def final_amount
