@@ -37,7 +37,7 @@ class BaseProduct
 
   def final_amount
     return 0 if purchased_quantity <= 0
-    purchased_amount - discount
+    (purchased_amount - discount).round(2)
   end
 
   def purchased_amount
@@ -46,8 +46,8 @@ class BaseProduct
 
   def discount
     return 0 if promotion_units <= 0
-    valid_promotions = purchased_quantity % promotion_units
+    valid_promotions = purchased_quantity / promotion_units
     no_discount_units = purchased_quantity - valid_promotions * promotion_units
-    purchased_amount - no_discount_units*price - valid_promotions * promotion_price
+    (purchased_amount - no_discount_units*price - valid_promotions * promotion_price).round(2)
   end
 end
