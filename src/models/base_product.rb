@@ -28,11 +28,11 @@ class BaseProduct
   end
 
   def pretty_quantity
-    purchased_quantity.to_s.ljust(QUANTITY_SPACING,' ')
+    purchased_quantity.round(2).to_s.ljust(QUANTITY_SPACING,' ')
   end
 
   def pretty_price
-    "$#{price}".ljust(PRICE_SPACING,' ')
+    "$#{final_amount.round(2)}".ljust(PRICE_SPACING,' ')
   end
 
   def final_amount

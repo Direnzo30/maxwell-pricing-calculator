@@ -2,9 +2,9 @@ require 'spec_helper'
 
 RSpec.describe BaseProduct do
 
-  def validate_product_summary(name:, quantity:, price:, expected_amount:, expected_discount:)
+  def validate_product_summary(name:, quantity:, expected_amount:, expected_discount:)
     label, final_amount, discount = subject.item_summary
-    expect(label).to eq("#{name.ljust(described_class::NAME_SPACING, ' ')} #{quantity.to_s.ljust(described_class::QUANTITY_SPACING, ' ')} #{"$#{price}".ljust(described_class::PRICE_SPACING, ' ')}")
+    expect(label).to eq("#{name.ljust(described_class::NAME_SPACING, ' ')} #{quantity.to_s.ljust(described_class::QUANTITY_SPACING, ' ')} #{"$#{final_amount}".ljust(described_class::PRICE_SPACING, ' ')}")
     expect(final_amount).to eq(expected_amount)
     expect(discount).to eq(expected_discount) 
   end
@@ -25,7 +25,7 @@ RSpec.describe BaseProduct do
         5.times do
           subject.add_item
         end
-        validate_product_summary(name: params[:name], quantity: 5, price: params[:price], expected_amount: 12.5, expected_discount: 0)
+        validate_product_summary(name: params[:name], quantity: 5, expected_amount: 12.5, expected_discount: 0)
       end
     end
 
@@ -43,7 +43,7 @@ RSpec.describe BaseProduct do
         5.times do
           subject.add_item
         end
-        validate_product_summary(name: params[:name], quantity: 5, price: params[:price], expected_amount: 25.20, expected_discount: 0.80)
+        validate_product_summary(name: params[:name], quantity: 5, expected_amount: 25.20, expected_discount: 0.80)
       end
     end
   end

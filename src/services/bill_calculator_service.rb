@@ -34,18 +34,19 @@ class BillCalculatorService
   end
 
   def prettify_summary(items)
-    puts "#{"Item".ljust(NAME_SPACING, ' ')} #{"Quantity".ljust(QUANTITY_SPACING, ' ')} #{"Price".ljust(PRICE_SPACING, ' ')}"
-    puts "-"*(NAME_SPACING + QUANTITY_SPACING + PRICE_SPACING + 2)
+    result = "#{"Item".ljust(NAME_SPACING, ' ')} #{"Quantity".ljust(QUANTITY_SPACING, ' ')} #{"Price".ljust(PRICE_SPACING, ' ')}\n"
+    result += "-"*(NAME_SPACING + QUANTITY_SPACING + PRICE_SPACING + 2) + "\n"
     total = 0
     savings = 0
-    items.each do |product_key, product_handler|
+    items.sort.to_h.each do |product_key, product_handler|
       label, amount, discount = product_handler.item_summary
       total += amount
       savings += discount
-      puts label
+      result += "#{label}\n"
     end
-    puts
-    puts "Total price: $#{total}"
-    puts "You saved $#{savings} today"
+    result += "\n"
+    result += "Total price: $#{total.round(2)}\n"
+    result += "You saved $#{savings.round(2)} today"
+    result
   end
 end
